@@ -1,118 +1,20 @@
-// Banco de dados de questões (simulado)
-const questions = [
-    {
-        question: "O que significa o 'V' de Volume no contexto de Big Data?",
-        answers: {
-            a: "A velocidade de processamento dos dados",
-            b: "A quantidade massiva de dados gerados",
-            c: "A variedade de formatos de dados",
-            d: "A veracidade das informações"
-        },
-        correctAnswer: "b"
-    },
-    {
-        question: "Qual das seguintes NÃO é uma característica do Big Data?",
-        answers: {
-            a: "Volume",
-            b: "Velocidade",
-            c: "Variedade",
-            d: "Virtualização"
-        },
-        correctAnswer: "d"
-    },
-    {
-        question: "Qual tecnologia é comumente associada ao processamento de Big Data?",
-        answers: {
-            a: "Hadoop",
-            b: "MySQL",
-            c: "Microsoft Word",
-            d: "Adobe Photoshop"
-        },
-        correctAnswer: "a"
-    },
-    {
-        question: "O que o MapReduce faz no ecossistema Hadoop?",
-        answers: {
-            a: "Processa e gera grandes conjuntos de dados em paralelo",
-            b: "Cria mapas geográficos de data centers",
-            c: "Reduz o tamanho dos arquivos para economizar espaço",
-            d: "Mapeia endereços IP para localizações físicas"
-        },
-        correctAnswer: "a"
-    },
-    {
-        question: "Qual desses é um exemplo de dado não estruturado?",
-        answers: {
-            a: "Planilha Excel",
-            b: "Tabela em um banco de dados relacional",
-            c: "Post em uma rede social",
-            d: "Arquivo CSV"
-        },
-        correctAnswer: "c"
-    },
-    {
-        question: "O que significa 'ETL' no contexto de Big Data?",
-        answers: {
-            a: "Extract, Transform, Load",
-            b: "Electronic Transaction Log",
-            c: "Enterprise Technology Layer",
-            d: "Extended Transfer Link"
-        },
-        correctAnswer: "a"
-    },
-    {
-        question: "Qual dessas ferramentas é usada para processamento de fluxo de dados em tempo real?",
-        answers: {
-            a: "Apache Kafka",
-            b: "Microsoft Excel",
-            c: "Adobe Illustrator",
-            d: "Oracle Database"
-        },
-        correctAnswer: "a"
-    },
-    {
-        question: "O que é Data Lake?",
-        answers: {
-            a: "Um repositório que armazena dados brutos em seu formato nativo",
-            b: "Um banco de dados relacional altamente estruturado",
-            c: "Um software para análise de dados geográficos",
-            d: "Um tipo específico de data warehouse"
-        },
-        correctAnswer: "a"
-    },
-    {
-        question: "Qual desses é um desafio comum no trabalho com Big Data?",
-        answers: {
-            a: "Escassez de dados para análise",
-            b: "Dificuldade em armazenar pequenos volumes de dados",
-            c: "Integração de dados de diferentes fontes e formatos",
-            d: "Velocidade de processamento extremamente rápida para pequenos conjuntos"
-        },
-        correctAnswer: "c"
-    },
-    {
-        question: "O que o 'V' de Veracidade no Big Data se refere?",
-        answers: {
-            a: "A velocidade de coleta de dados",
-            b: "A confiabilidade e qualidade dos dados",
-            c: "A variedade de fontes de dados",
-            d: "O valor comercial dos dados"
-        },
-        correctAnswer: "b"
-    }
-];
-
-// Variáveis do quiz
+let questions = [];
 let currentQuestion = 0;
 let score = 0;
-let userAnswers = new Array(questions.length);
+let userAnswers; 
 
-// Função para carregar a questão atual
+let allResultItemsHTML = [];
+let currentResultsPage = 1;
+const resultsPerPage = 5;
+
 function loadQuestion() {
     const quizContainer = document.getElementById('quiz');
+    if (questions.length === 0) {
+        quizContainer.innerHTML = "<p>Carregando questões...</p>";
+        return;
+    }
     const questionObj = questions[currentQuestion];
     
-    // Construir HTML da questão
     let questionHTML = `<div class="question">${currentQuestion + 1}. ${questionObj.question}</div><div class="answers">`;
     
     for (const letter in questionObj.answers) {
@@ -127,47 +29,128 @@ function loadQuestion() {
     questionHTML += '</div>';
     quizContainer.innerHTML = questionHTML;
     
-    // Marcar resposta anterior se existir
-    if (userAnswers[currentQuestion] !== undefined) {
+    if (userAnswers && userAnswers[currentQuestion] !== undefined) {
         document.querySelector(`input[value="${userAnswers[currentQuestion]}"]`).checked = true;
     }
     
-    // Atualizar estado dos botões
     document.getElementById('previous').disabled = currentQuestion === 0;
     document.getElementById('next').disabled = currentQuestion === questions.length - 1;
 }
 
-// Função para salvar resposta
 function saveAnswer() {
     const selectedOption = document.querySelector('input[name="answer"]:checked');
     if (selectedOption) {
-        userAnswers[currentQuestion] = selectedOption.value;
+        if (userAnswers) {
+            userAnswers[currentQuestion] = selectedOption.value;
+        }
     }
 }
 
-// Função para mostrar resultados
 function showResults() {
     saveAnswer();
     
-    // Calcular pontuação
     score = 0;
-    for (let i = 0; i < questions.length; i++) {
-        if (userAnswers[i] === questions[i].correctAnswer) {
-            score++;
+    if (userAnswers && userAnswers.length === questions.length) {
+        for (let i = 0; i < questions.length; i++) {
+            if (userAnswers[i] === questions[i].correctAnswer) {
+                score++;
+            }
         }
     }
     
-    // Mostrar resultado
+    document.getElementById('quiz').innerHTML = '';
+
     const resultsContainer = document.getElementById('results');
-    resultsContainer.innerHTML = `Você acertou ${score} de ${questions.length} questões!`;
+    resultsContainer.innerHTML = `<h2>Você acertou ${score} de ${questions.length} questões!</h2>`;
     
-    // Esconder botões
+    allResultItemsHTML = []; 
+    questions.forEach((question, index) => {
+        const userAnswer = userAnswers ? userAnswers[index] : undefined;
+        const correctAnswer = question.correctAnswer;
+        const userAnswerText = userAnswer ? question.answers[userAnswer] : "Não respondida";
+        const correctAnswerText = question.answers[correctAnswer];
+        
+        let itemHTML = `<div class="result-item">`;
+        itemHTML += `<p class="question-text">${index + 1}. ${question.question}</p>`;
+        
+        if (userAnswer === correctAnswer) {
+            itemHTML += `<p class="user-answer correct-answer">Sua resposta: ${userAnswer ? userAnswer.toUpperCase() : 'N/A'} (${userAnswerText})</p>`;
+        } else {
+            itemHTML += `<p class="user-answer incorrect-answer">Sua resposta: ${userAnswer ? userAnswer.toUpperCase() : 'N/A'} (${userAnswerText})</p>`;
+            itemHTML += `<p class="correct-answer-text">Resposta correta: ${correctAnswer.toUpperCase()} (${correctAnswerText})</p>`;
+        }
+        itemHTML += `</div>`;
+        allResultItemsHTML.push(itemHTML);
+    });
+
+    resultsContainer.innerHTML += `
+        <h3>Gabarito:</h3>
+        <div id="answer-key-items"></div>
+        <div id="results-pagination">
+            <button id="prev-results-page" disabled>Anterior</button>
+            <span id="results-page-info"></span>
+            <button id="next-results-page">Próxima</button>
+        </div>
+    `;
+    
+    currentResultsPage = 1;
+    displayCurrentResultsPage();
+
+    document.getElementById('prev-results-page').addEventListener('click', () => {
+        if (currentResultsPage > 1) {
+            currentResultsPage--;
+            displayCurrentResultsPage();
+        }
+    });
+
+    document.getElementById('next-results-page').addEventListener('click', () => {
+        const totalPages = Math.ceil(allResultItemsHTML.length / resultsPerPage);
+        if (currentResultsPage < totalPages) {
+            currentResultsPage++;
+            displayCurrentResultsPage();
+        }
+    });
+    
     document.getElementById('previous').style.display = 'none';
     document.getElementById('next').style.display = 'none';
     document.getElementById('submit').style.display = 'none';
 }
 
-// Event Listeners
+function displayCurrentResultsPage() {
+    const answerKeyItemsContainer = document.getElementById('answer-key-items');
+    const pageInfoSpan = document.getElementById('results-page-info');
+    const prevButton = document.getElementById('prev-results-page');
+    const nextButton = document.getElementById('next-results-page');
+
+    if (!answerKeyItemsContainer) return; 
+
+    const totalItems = allResultItemsHTML.length;
+    const totalPages = Math.ceil(totalItems / resultsPerPage);
+
+    const startIndex = (currentResultsPage - 1) * resultsPerPage;
+    const endIndex = startIndex + resultsPerPage;
+    const pageItems = allResultItemsHTML.slice(startIndex, endIndex);
+
+    answerKeyItemsContainer.innerHTML = pageItems.join('');
+    
+    if (totalPages > 0) {
+        pageInfoSpan.textContent = `Página ${currentResultsPage} de ${totalPages}`;
+    } else {
+        pageInfoSpan.textContent = 'Nenhum item no gabarito.';
+    }
+
+
+    prevButton.disabled = currentResultsPage === 1;
+    nextButton.disabled = currentResultsPage === totalPages || totalPages === 0;
+
+    const paginationControls = document.getElementById('results-pagination');
+    if (totalPages <= 1) {
+        paginationControls.style.display = 'none';
+    } else {
+        paginationControls.style.display = 'flex'; 
+    }
+}
+
 document.getElementById('previous').addEventListener('click', () => {
     saveAnswer();
     currentQuestion--;
@@ -182,5 +165,26 @@ document.getElementById('next').addEventListener('click', () => {
 
 document.getElementById('submit').addEventListener('click', showResults);
 
-// Iniciar quiz
-loadQuestion();
+async function fetchQuestionsAndStartQuiz() {
+    try {
+        const response = await fetch('/data/questions.json');
+        if (!response.ok) {
+            throw new Error(`HTTP error! status: ${response.status}`);
+        }
+        const fetchedQuestions = await response.json();
+        questions = fetchedQuestions;
+        userAnswers = new Array(questions.length);
+        loadQuestion(); 
+    } catch (error) {
+        console.error("Falha ao carregar as questões do quiz:", error);
+        const quizContainer = document.getElementById('quiz');
+        if (quizContainer) {
+            quizContainer.innerHTML = "<p>Desculpe, não foi possível carregar as questões do quiz. Tente novamente mais tarde.</p>";
+        }
+        document.getElementById('previous').disabled = true;
+        document.getElementById('next').disabled = true;
+        document.getElementById('submit').disabled = true;
+    }
+}
+
+fetchQuestionsAndStartQuiz();
