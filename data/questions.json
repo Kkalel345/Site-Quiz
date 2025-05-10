@@ -1,0 +1,502 @@
+[
+    {
+        "question": "O que significa o 'V' de Volume no contexto de Big Data?",
+        "answers": {
+            "a": "A velocidade de processamento dos dados",
+            "b": "A quantidade massiva de dados gerados",
+            "c": "A variedade de formatos de dados",
+            "d": "A veracidade das informações"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual das seguintes NÃO é uma característica do Big Data?",
+        "answers": {
+            "a": "Volume",
+            "b": "Velocidade",
+            "c": "Variedade",
+            "d": "Virtualização"
+        },
+        "correctAnswer": "d"
+    },
+    {
+        "question": "Qual tecnologia é comumente associada ao processamento de Big Data?",
+        "answers": {
+            "a": "Hadoop",
+            "b": "MySQL",
+            "c": "Microsoft Word",
+            "d": "Adobe Photoshop"
+        },
+        "correctAnswer": "a"
+    },
+    {
+        "question": "O que o MapReduce faz no ecossistema Hadoop?",
+        "answers": {
+            "a": "Processa e gera grandes conjuntos de dados em paralelo",
+            "b": "Cria mapas geográficos de data centers",
+            "c": "Reduz o tamanho dos arquivos para economizar espaço",
+            "d": "Mapeia endereços IP para localizações físicas"
+        },
+        "correctAnswer": "a"
+    },
+    {
+        "question": "Qual desses é um exemplo de dado não estruturado?",
+        "answers": {
+            "a": "Planilha Excel",
+            "b": "Tabela em um banco de dados relacional",
+            "c": "Post em uma rede social",
+            "d": "Arquivo CSV"
+        },
+        "correctAnswer": "c"
+    },
+    {
+        "question": "O que significa 'ETL' no contexto de Big Data?",
+        "answers": {
+            "a": "Extract, Transform, Load",
+            "b": "Electronic Transaction Log",
+            "c": "Enterprise Technology Layer",
+            "d": "Extended Transfer Link"
+        },
+        "correctAnswer": "a"
+    },
+    {
+        "question": "Qual dessas ferramentas é usada para processamento de fluxo de dados em tempo real?",
+        "answers": {
+            "a": "Apache Kafka",
+            "b": "Microsoft Excel",
+            "c": "Adobe Illustrator",
+            "d": "Oracle Database"
+        },
+        "correctAnswer": "a"
+    },
+    {
+        "question": "O que é Data Lake?",
+        "answers": {
+            "a": "Um repositório que armazena dados brutos em seu formato nativo",
+            "b": "Um banco de dados relacional altamente estruturado",
+            "c": "Um software para análise de dados geográficos",
+            "d": "Um tipo específico de data warehouse"
+        },
+        "correctAnswer": "a"
+    },
+    {
+        "question": "Qual desses é um desafio comum no trabalho com Big Data?",
+        "answers": {
+            "a": "Escassez de dados para análise",
+            "b": "Dificuldade em armazenar pequenos volumes de dados",
+            "c": "Integração de dados de diferentes fontes e formatos",
+            "d": "Velocidade de processamento extremamente rápida para pequenos conjuntos"
+        },
+        "correctAnswer": "c"
+    },
+    {
+        "question": "O que o 'V' de Veracidade no Big Data se refere?",
+        "answers": {
+            "a": "A velocidade de coleta de dados",
+            "b": "A confiabilidade e qualidade dos dados",
+            "c": "A variedade de fontes de dados",
+            "d": "O valor comercial dos dados"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual o papel do 'Valor' no contexto dos 5 Vs do Big Data?",
+        "answers": {
+            "a": "O custo de aquisição dos dados",
+            "b": "A quantidade de dados armazenados",
+            "c": "O benefício ou insight obtido a partir dos dados",
+            "d": "A velocidade com que os dados são gerados"
+        },
+        "correctAnswer": "c"
+    },
+    {
+        "question": "O que é NoSQL?",
+        "answers": {
+            "a": "Um tipo de SQL otimizado para Big Data",
+            "b": "Uma linguagem de consulta para dados não estruturados",
+            "c": "Uma categoria de bancos de dados que não usam SQL como principal linguagem de consulta",
+            "d": "Um padrão para segurança de dados em Big Data"
+        },
+        "correctAnswer": "c"
+    },
+    {
+        "question": "Qual das seguintes é uma característica de um Data Warehouse?",
+        "answers": {
+            "a": "Armazena dados brutos e não processados",
+            "b": "É otimizado para consultas analíticas e relatórios",
+            "c": "É usado principalmente para transações operacionais em tempo real",
+            "d": "Não requer esquemas de dados definidos"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é Apache Spark?",
+        "answers": {
+            "a": "Um sistema de gerenciamento de banco de dados relacional",
+            "b": "Uma ferramenta de visualização de dados",
+            "c": "Um framework de processamento de dados em larga escala, rápido e de propósito geral",
+            "d": "Um sistema operacional para clusters de Big Data"
+        },
+        "correctAnswer": "c"
+    },
+    {
+        "question": "Qual a principal diferença entre Hadoop HDFS e Apache Spark?",
+        "answers": {
+            "a": "HDFS é para armazenamento, Spark é para processamento",
+            "b": "Spark é para armazenamento, HDFS é para processamento",
+            "c": "Ambos são primariamente para armazenamento de dados",
+            "d": "Ambos são primariamente para processamento em tempo real"
+        },
+        "correctAnswer": "a"
+    },
+    {
+        "question": "O que significa 'Data Mining'?",
+        "answers": {
+            "a": "O processo de extração física de minerais de dados",
+            "b": "A criação de grandes volumes de dados",
+            "c": "O processo de descobrir padrões e conhecimento em grandes conjuntos de dados",
+            "d": "A limpeza e formatação de dados brutos"
+        },
+        "correctAnswer": "c"
+    },
+    {
+        "question": "Qual o objetivo da análise preditiva em Big Data?",
+        "answers": {
+            "a": "Descrever o que aconteceu no passado",
+            "b": "Entender por que algo aconteceu",
+            "c": "Prever resultados futuros com base em dados históricos",
+            "d": "Otimizar processos de negócios atuais"
+        },
+        "correctAnswer": "c"
+    },
+    {
+        "question": "O que é 'Machine Learning' no contexto de Big Data?",
+        "answers": {
+            "a": "Ensinar máquinas a realizar tarefas sem serem explicitamente programadas, usando dados",
+            "b": "Um tipo de hardware especializado para processar Big Data",
+            "c": "Uma linguagem de programação específica para Big Data",
+            "d": "Um método de compressão de dados"
+        },
+        "correctAnswer": "a"
+    },
+    {
+        "question": "Qual dos seguintes é um exemplo de banco de dados NoSQL orientado a documentos?",
+        "answers": {
+            "a": "MySQL",
+            "b": "MongoDB",
+            "c": "PostgreSQL",
+            "d": "Oracle"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Data Governance'?",
+        "answers": {
+            "a": "O processo de governar um país usando dados",
+            "b": "A gestão geral da disponibilidade, usabilidade, integridade e segurança dos dados",
+            "c": "Uma técnica de visualização de dados",
+            "d": "Um algoritmo de compressão de dados"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual a função do YARN no ecossistema Hadoop?",
+        "answers": {
+            "a": "Armazenamento de dados distribuído",
+            "b": "Gerenciamento de recursos do cluster e agendamento de tarefas",
+            "c": "Processamento de dados em batch",
+            "d": "Interface de consulta SQL para Hadoop"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que são 'dados estruturados'?",
+        "answers": {
+            "a": "Dados que não possuem um formato ou organização predefinida",
+            "b": "Dados organizados em um formato fixo, como tabelas de bancos de dados relacionais",
+            "c": "Vídeos e áudios",
+            "d": "E-mails e posts em redes sociais"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual o principal benefício de usar a nuvem para Big Data?",
+        "answers": {
+            "a": "Menor segurança dos dados",
+            "b": "Escalabilidade e flexibilidade de recursos",
+            "c": "Maior latência no acesso aos dados",
+            "d": "Custos fixos e previsíveis, independentemente do uso"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Streaming Data'?",
+        "answers": {
+            "a": "Dados armazenados em fitas magnéticas",
+            "b": "Dados que são gerados continuamente por diversas fontes",
+            "c": "Um backup completo de um banco de dados",
+            "d": "Dados que são processados apenas uma vez por dia"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual a importância da visualização de dados em Big Data?",
+        "answers": {
+            "a": "Apenas para tornar os relatórios mais bonitos",
+            "b": "Para ajudar a identificar padrões, tendências e outliers de forma mais fácil",
+            "c": "Para aumentar o volume dos dados",
+            "d": "Para garantir a veracidade dos dados"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Edge Computing' no contexto de Big Data?",
+        "answers": {
+            "a": "Processar dados exclusivamente em grandes data centers centralizados",
+            "b": "Processar dados perto da fonte de geração para reduzir latência",
+            "c": "Uma técnica de criptografia de dados",
+            "d": "Um tipo de banco de dados NoSQL"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual o significado de 'Data Silos'?",
+        "answers": {
+            "a": "Repositórios de dados altamente integrados e acessíveis",
+            "b": "Conjuntos de dados isolados que não são compartilhados com outras partes da organização",
+            "c": "Uma técnica de backup de dados",
+            "d": "Um tipo de hardware para armazenamento de Big Data"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Apache Hive'?",
+        "answers": {
+            "a": "Um sistema de gerenciamento de fluxo de trabalho para Hadoop",
+            "b": "Um sistema de data warehouse sobre Hadoop que facilita a leitura, escrita e gerenciamento de grandes conjuntos de dados usando SQL-like",
+            "c": "Uma ferramenta de mensagens em tempo real",
+            "d": "Um banco de dados NoSQL orientado a grafos"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual a diferença entre 'Data Lake' e 'Data Warehouse'?",
+        "answers": {
+            "a": "Data Lake armazena dados estruturados, Data Warehouse armazena dados brutos",
+            "b": "Data Lake armazena dados brutos e não estruturados, Data Warehouse armazena dados processados e estruturados",
+            "c": "Não há diferença significativa, são termos intercambiáveis",
+            "d": "Data Warehouse é usado para streaming, Data Lake para batch processing"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Inteligência Artificial (IA)' e como se relaciona com Big Data?",
+        "answers": {
+            "a": "IA é um subcampo do Big Data focado em armazenamento",
+            "b": "Big Data fornece os grandes volumes de dados necessários para treinar e alimentar sistemas de IA",
+            "c": "IA é usada para reduzir o volume de Big Data",
+            "d": "Big Data e IA são conceitos não relacionados"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual o papel da 'privacidade de dados' em projetos de Big Data?",
+        "answers": {
+            "a": "É irrelevante, pois o foco é na quantidade de dados",
+            "b": "É uma consideração secundária, focada apenas após a análise",
+            "c": "É um aspecto crucial que deve ser considerado desde o design para proteger informações sensíveis",
+            "d": "Aplica-se apenas a pequenos conjuntos de dados"
+        },
+        "correctAnswer": "c"
+    },
+    {
+        "question": "O que é 'Apache Cassandra'?",
+        "answers": {
+            "a": "Um banco de dados relacional tradicional",
+            "b": "Um banco de dados NoSQL distribuído, altamente escalável e tolerante a falhas",
+            "c": "Uma ferramenta de ETL",
+            "d": "Um framework para machine learning"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Análise Descritiva'?",
+        "answers": {
+            "a": "Prever o que vai acontecer no futuro",
+            "b": "Sugerir ações para otimizar resultados",
+            "c": "Resumir dados históricos para entender o que aconteceu",
+            "d": "Descobrir por que algo aconteceu"
+        },
+        "correctAnswer": "c"
+    },
+    {
+        "question": "O que é 'Análise Preditiva'?",
+        "answers": {
+            "a": "Descrever eventos passados",
+            "b": "Utilizar dados históricos e técnicas estatísticas para prever futuros resultados",
+            "c": "Automatizar decisões baseadas em dados",
+            "d": "Limpar e transformar dados brutos"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Análise Prescritiva'?",
+        "answers": {
+            "a": "Apenas descrever o estado atual dos dados",
+            "b": "Prever tendências futuras sem sugerir ações",
+            "c": "Recomendar ações ou decisões para otimizar resultados futuros",
+            "d": "Coletar dados de diversas fontes"
+        },
+        "correctAnswer": "c"
+    },
+    {
+        "question": "Qual a função do 'Chief Data Officer (CDO)'?",
+        "answers": {
+            "a": "Gerenciar as operações financeiras da empresa",
+            "b": "Liderar a estratégia de dados, governança, controle, política e monetização de dados",
+            "c": "Desenvolver software e aplicativos",
+            "d": "Gerenciar a infraestrutura de TI física"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Dark Data'?",
+        "answers": {
+            "a": "Dados que são usados ativamente para análise e tomada de decisão",
+            "b": "Dados que uma organização coleta, processa e armazena, mas geralmente não usa para outros fins",
+            "c": "Dados criptografados e seguros",
+            "d": "Dados publicamente disponíveis na internet"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual a importância da 'Qualidade dos Dados' em Big Data?",
+        "answers": {
+            "a": "Não é importante, pois o volume compensa a baixa qualidade",
+            "b": "É fundamental, pois dados de baixa qualidade levam a insights incorretos e decisões ruins",
+            "c": "É relevante apenas para pequenos conjuntos de dados",
+            "d": "A qualidade é automaticamente garantida em sistemas de Big Data"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Data Fabric'?",
+        "answers": {
+            "a": "Um tipo específico de tecido usado em data centers",
+            "b": "Uma arquitetura e conjunto de serviços de dados que fornecem capacidades consistentes em um ambiente híbrido multinuvem",
+            "c": "Um software para criar gráficos e visualizações",
+            "d": "Um método de compressão de dados de vídeo"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Data Mesh'?",
+        "answers": {
+            "a": "Uma rede física para conectar servidores de dados",
+            "b": "Uma abordagem arquitetônica descentralizada para gerenciamento de dados analíticos, baseada em domínios",
+            "c": "Um tipo de banco de dados NoSQL",
+            "d": "Uma ferramenta de visualização de dados em malha"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual o papel do 'Metadata' em Big Data?",
+        "answers": {
+            "a": "São os dados principais que estão sendo analisados",
+            "b": "São dados sobre os dados, fornecendo contexto e informações sobre sua origem, estrutura e uso",
+            "c": "São dados que foram descartados por baixa qualidade",
+            "d": "São os algoritmos usados para processar Big Data"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Apache Flink'?",
+        "answers": {
+            "a": "Um sistema de gerenciamento de banco de dados relacional",
+            "b": "Um framework de processamento de fluxo de código aberto com poderosas capacidades de processamento de estado",
+            "c": "Uma ferramenta de business intelligence",
+            "d": "Um sistema operacional para dispositivos móveis"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Data Lineage'?",
+        "answers": {
+            "a": "A linhagem genética dos cientistas de dados",
+            "b": "O ciclo de vida dos dados, incluindo suas origens, transformações e movimentações ao longo do tempo",
+            "c": "Um tipo de gráfico usado para visualizar dados",
+            "d": "A velocidade com que os dados são gerados"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual a diferença entre 'Batch Processing' e 'Stream Processing'?",
+        "answers": {
+            "a": "Batch processa dados em tempo real, Stream processa grandes blocos de dados periodicamente",
+            "b": "Batch processa grandes volumes de dados de uma vez, Stream processa dados continuamente à medida que chegam",
+            "c": "Não há diferença, são sinônimos",
+            "d": "Batch é para dados pequenos, Stream para Big Data"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Data Monetization'?",
+        "answers": {
+            "a": "O custo de armazenamento de dados",
+            "b": "O processo de gerar valor financeiro a partir de ativos de dados",
+            "c": "A compra de dados de terceiros",
+            "d": "A doação de dados para fins de pesquisa"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual o impacto da LGPD/GDPR em projetos de Big Data?",
+        "answers": {
+            "a": "Nenhum impacto, pois são leis focadas em pequenas empresas",
+            "b": "Aumenta a necessidade de governança de dados, consentimento e proteção da privacidade dos dados pessoais",
+            "c": "Simplifica o compartilhamento de dados entre empresas",
+            "d": "Reduz a quantidade de dados que podem ser coletados"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "O que é 'Federated Learning'?",
+        "answers": {
+            "a": "Um modelo de aprendizado onde todos os dados são centralizados em um único servidor",
+            "b": "Uma técnica de aprendizado de máquina que treina um algoritmo em múltiplos dispositivos descentralizados ou servidores que mantêm dados locais, sem trocá-los",
+            "c": "Aprender sobre a estrutura de governos federais",
+            "d": "Um tipo de rede neural profunda"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual a principal vantagem de um banco de dados orientado a grafos como Neo4j?",
+        "answers": {
+            "a": "Armazenar dados tabulares de forma eficiente",
+            "b": "Processar transações financeiras em alta velocidade",
+            "c": "Modelar e consultar relações complexas entre entidades de forma eficiente",
+            "d": "Armazenar documentos JSON de forma flexível"
+        },
+        "correctAnswer": "c"
+    },
+    {
+        "question": "O que é 'Data Virtualization'?",
+        "answers": {
+            "a": "Criar cópias físicas de todos os dados em diferentes locais",
+            "b": "Uma tecnologia que permite que aplicativos acessem e consultem dados sem saber detalhes técnicos de onde ou como os dados estão armazenados",
+            "c": "Virtualizar os servidores que armazenam os dados",
+            "d": "Um tipo de compressão de dados para reduzir o volume"
+        },
+        "correctAnswer": "b"
+    },
+    {
+        "question": "Qual o papel da 'Ética' na análise de Big Data?",
+        "answers": {
+            "a": "A ética não se aplica à análise de dados, apenas à coleta",
+            "b": "Considerar as implicações morais, justiça, viés e impacto social do uso de Big Data e algoritmos",
+            "c": "Garantir que os algoritmos sejam os mais rápidos possíveis",
+            "d": "Focar exclusivamente na maximização do lucro a partir dos dados"
+        },
+        "correctAnswer": "b"
+    }
+]

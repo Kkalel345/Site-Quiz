@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz Big Data</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="icon" href="assets/bigdata.png" type="image/png">
 </head>
 <body>
     <header>
@@ -15,12 +16,14 @@
         </nav>
     </header>
 
-    <main>
+    <main class="quiz-main">
         <div class="quiz-container">
             <div id="quiz"></div>
-            <button id="previous">Anterior</button>
-            <button id="next">Próxima</button>
-            <button id="submit">Enviar</button>
+            <div class="buttons">
+                <button id="previous">Anterior</button>
+                <button id="next">Próxima</button>
+                <button id="submit">Enviar</button>
+            </div>
             <div id="results"></div>
         </div>
     </main>
@@ -29,6 +32,6 @@
         <p>© 2025 Big Masters Education. Todos os direitos reservados.</p>
     </footer>
 
-    <script src="script.js"></script>
+    <script src="/js/script.js"></script>
 </body>
 </html>
