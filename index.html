@@ -1,63 +1,597 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Big Data - Introdução</title>
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="icon" href="assets/bigdata.png" type="image/png">
+<html lang="pt-br">
+<head><link rel="icon" href="/cidade-verde.ico" type="image/x-icon">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Rede de Voluntários da Biodiversidade</title>
+  <meta name="description" content="Plataforma para conectar pessoas a ações de conservação, reflorestamento e proteção da biodiversidade brasileira." />
+  <style>
+    :root{
+      --bg:#0b1b14;           /* fundo profundo selva */
+      --bg-2:#0f241a;         /* variação mais clara */
+      --card:#11291f;         /* cartões */
+      --ink:#e9f5ee;          /* texto principal */
+      --ink-2:#cfe7da;        /* texto secundário */
+      --brand:#50d397;        /* verde ação */
+      --brand-2:#2ab87b;      /* verde escuro */
+      --accent:#72f0c0;       /* detalhes */
+      --warn:#ffd166;         /* destaque quente */
+      --error:#ff6b6b;        /* erro */
+      --ok:#7dd37d;           /* sucesso */
+      --ring: 0 0 0 3px rgb(80 211 151 / 25%);
+      --radius: 16px;
+      --radius-sm: 12px;
+      --shadow: 0 10px 25px rgb(0 0 0 / 35%), inset 0 1px 0 rgb(255 255 255 / 5%);
+      --shadow-sm: 0 6px 16px rgb(0 0 0 / 30%);
+      --shadow-lg: 0 20px 40px rgb(0 0 0 / 45%);
+    }
+    html{scroll-behavior:smooth}
+    body{
+      margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      background: radial-gradient(1200px 600px at 80% -10%, #154733 0%, transparent 60%),
+                  radial-gradient(900px 600px at -10% 20%, #0e3325 0%, transparent 60%),
+                  var(--bg);
+      color: var(--ink);
+      line-height:1.6;
+    }
+    a{color:white; text-decoration:none}
+    a:hover{text-decoration:underline}
+    .container{max-width:1100px; margin-inline:auto; padding:0 20px}
+    /* Header */
+    header{
+      position:sticky; top:0; z-index:50; backdrop-filter:saturate(130%) blur(8px);
+      background: linear-gradient(180deg, rgb(11 27 20 / 90%), rgb(11 27 20 / 60%));
+      border-bottom:1px solid rgb(255 255 255 / 6%);
+    }
+    .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
+    .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:0.3px}
+    .logo {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background:
+    url("/cidade-verde.ico") center/60% no-repeat,
+    conic-gradient(from 280deg, var(--brand), var(--accent));
+  box-shadow: var(--shadow-sm);
+}
+    .nav a{padding:10px 12px; border-radius:10px}
+    .nav a:hover{background:rgb(255 255 255 / 4%);color: white}
+    .cta{background: linear-gradient(180deg, var(--brand), var(--brand-2)); color:#052014; padding:10px 14px; border-radius:12px; font-weight:700; border:1px solid rgb(255 255 255 / 10%); box-shadow: var(--shadow)}
+    .cta:hover{filter:brightness(1.05)}
+
+    /* Hero */
+    .hero{padding:72px 0 36px; position:relative; overflow:hidden}
+    .hero-grid{display:grid; grid-template-columns: 1.15fr 0.85fr; gap:30px}
+    .hero h1{font-size: clamp(28px, 3.2vw, 48px); line-height:1.15; margin: 10px 0}
+    .hero p{font-size: clamp(16px, 1.4vw, 20px); color: var(--ink-2); margin: 18px 0 22px}
+    .hero-card{background: linear-gradient(180deg, rgb(17 41 31 / 90%), rgb(17 41 31 / 60%)); border:1px solid rgb(255 255 255 / 8%); padding:22px; border-radius:var(--radius); box-shadow:var(--shadow)}
+    .pill{display:inline-flex; gap:10px; align-items:center; background: rgb(255 255 255 / 6%); border:1px solid rgb(255 255 255 / 10%); padding:6px 12px; border-radius:999px; font-size:13px}
+
+    /* Section */
+    section{padding:56px 0}
+    h2{font-size: clamp(22px, 2.6vw, 34px); margin:0 0 12px}
+    .muted{color:var(--ink-2)}
+    .cards{display:grid; grid-template-columns: repeat(12, 1fr); gap:18px}
+    .card{grid-column: span 4; background: var(--card); border:1px solid rgb(255 255 255 / 8%); border-radius: var(--radius); box-shadow:var(--shadow); padding:18px}
+    .card header{position:static; background:transparent; border:none}
+    .card h3{margin:4px 0 8px; font-size:18px}
+    .kpi{font-size:28px; font-weight:800}
+
+    /* Filters & form */
+    .filters{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0}
+    .field{display:flex; flex-direction:column; gap:8px}
+    label{font-size:13px; color:var(--ink-2)}
+    select,input,textarea,button{font: inherit}
+    select,input,textarea{
+      background: rgb(255 255 255 / 6%);
+      color:var(--ink);
+      border:1px solid rgb(255 255 255 / 10%);
+      padding:10px 12px; border-radius:12px; outline:none;
+    }
+    select:focus,input:focus,textarea:focus{box-shadow: var(--ring); border-color: var(--brand)}
+    .chips{display:flex; flex-wrap:wrap; gap:10px}
+    .chip{cursor:pointer; user-select:none; border-radius:999px; padding:8px 12px; border:1px solid rgb(255 255 255 / 12%); background: rgb(255 255 255 / 6%)}
+    .chip.active{background:linear-gradient(180deg, var(--brand), var(--brand-2)); color:#042116; border-color:transparent; font-weight:700}
+    .btn{display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:12px 16px; border-radius:12px; border:1px solid rgb(255 255 255 / 10%); background: rgb(255 255 255 / 8%); color: var(--ink); cursor:pointer}
+    .btn.primary{background:linear-gradient(180deg, var(--brand), var(--brand-2)); color:#052014; font-weight:800}
+    .btn:hover{filter:brightness(1.05)}
+
+    /* Opportunities */
+    .opps{display:grid; grid-template-columns: repeat(12,1fr); gap:18px}
+    .opp{grid-column: span 6; background: var(--card); border:1px solid rgb(255 255 255 / 8%); border-radius: var(--radius); padding:18px; box-shadow:var(--shadow)}
+    .opp .meta{display:flex; flex-wrap:wrap; gap:10px; font-size:13px; color:var(--ink-2)}
+    .tag{display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border-radius:999px; background:rgb(255 255 255 / 8%); border:1px solid rgb(255 255 255 / 10%)}
+
+    /* Map placeholder */
+    .map{height:320px; border-radius: var(--radius); background:
+      radial-gradient(120px 60px at 20% 30%, #006644 0%, transparent 80%),
+      radial-gradient(220px 80px at 70% 60%, #155a44 0%, transparent 80%),
+      linear-gradient(180deg, #0a1d16, #0d241b);
+      border:1px solid rgb(255 255 255 / 8%); box-shadow:var(--shadow); position:relative; overflow:hidden}
+    .map::after{content:"Mapa interativo em breve (INPE / MapBiomas / OSM)…"; position:absolute; inset:auto 12px 12px 12px; color:var(--ink-2); font-size:14px}
+
+    /* Tables */
+    table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius: var(--radius-sm); box-shadow:var(--shadow); border:1px solid rgb(255 255 255 / 8%)}
+    th, td{padding:12px 14px; text-align:left}
+    thead th{background: rgb(255 255 255 / 8%); font-weight:700}
+    tbody tr:nth-child(odd){background: rgb(255 255 255 / 4%)}
+
+    /* Footer */
+    footer{padding:40px 0; color:var(--ink-2); border-top:1px solid rgb(255 255 255 / 8%)}
+
+    /* Utilities */
+    .grid-2{display:grid; grid-template-columns: 1fr 1fr; gap:18px}
+    .grid-3{display:grid; grid-template-columns: repeat(3, 1fr); gap:18px}
+    .grid-4{display:grid; grid-template-columns: repeat(4, 1fr); gap:18px}
+    .muted-box{background: rgb(255 255 255 / 6%); border:1px solid rgb(255 255 255 / 8%); padding:14px; border-radius:12px}
+    .sr-only{position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .hero-grid{grid-template-columns: 1fr}
+      .cards .card{grid-column: span 6}
+      .opps .opp{grid-column: span 12}
+      .filters{grid-template-columns:1fr 1fr}
+      .grid-4{grid-template-columns: repeat(2,1fr)}
+    }
+    @media (max-width: 640px){
+      .cards .card{grid-column: span 12}
+      .filters{grid-template-columns:1fr}
+      .grid-4,.grid-3,.grid-2{grid-template-columns:1fr}
+    }
+  </style>
 </head>
 <body>
-    <header>
-        <h1>Explorando o Mundo do Big Data</h1>
-        <nav>
-            <a href="index.html">Home</a>
-            <a href="quiz.html">Quiz</a>
-        </nav>
-    </header>
+  <!-- Header / Nav -->
+  <header aria-label="Topo do site">
+    <div class="container nav">
+      <div class="brand">
+        <div class="logo" aria-hidden="true"></div>
+        <span>Rede de Voluntários da <span style="color:var(--brand)">Biodiversidade</span></span>
+      </div>
+      <nav aria-label="Navegação primária">
+        <a href="#inicio">Início</a>
+        <a href="#situacao">Situação</a>
+        <a href="#ajudar">Como Ajudar</a>
+        <a href="#projetos">Projetos</a>
+        <a href="#educacao">Educação</a>
+        <a href="#contato" class="cta">Quero ser voluntário</a>
+      </nav>
+    </div>
+  </header>
 
-    <main>
-        <section class="intro">
-            <h2>O que é Big Data?</h2>
-            <p>Big Data refere-se ao grande volume de dados - estruturados e não estruturados - que inundam as empresas diariamente. Mas não é a quantidade de dados que é importante. O que importa é o que as organizações fazem com os dados.</p>
-            
-            <div class="vs-container">
-                <div class="v-item">
-                    <h3>Volume</h3>
-                    <p>A quantidade de dados gerados</p>
-                </div>
-                <div class="v-item">
-                    <h3>Velocidade</h3>
-                    <p>A velocidade de geração e processamento</p>
-                </div>
-                <div class="v-item">
-                    <h3>Variedade</h3>
-                    <p>Os diferentes tipos de dados disponíveis</p>
-                </div>
-            </div>
-        </section>
-
-        <div class="quiz-cta">
-            <h2>Teste seu conhecimento!</h2>
-            <a href="quiz.html" class="quiz-button">Iniciar Quiz</a>
+  <!-- Hero -->
+  <section id="inicio" class="hero">
+    <div class="container hero-grid">
+      <div>
+        <span class="pill">🟢 Plataforma cidadã &nbsp;•&nbsp; Amazônia • Cerrado • Mata Atlântica • Pantanal</span>
+        <h1>Junte-se à Rede de Voluntários e <span style="color:var(--brand)">proteja a biodiversidade brasileira</span>.</h1>
+        <p>
+          Conectamos pessoas a mutirões, ações de reflorestamento, monitoramento de fauna, educação ambiental e denúncias de desmatamento. Cadastre-se, escolha seu bioma e encontre oportunidades perto de você.
+        </p>
+        <div style="display:flex; gap:12px; flex-wrap:wrap">
+          <a class="btn primary" href="#contato">Quero participar</a>
+          <a class="btn" href="#opportunidades">Ver oportunidades</a>
         </div>
+      </div>
+      <aside class="hero-card" aria-label="Indicadores rápidos">
+        <div class="grid-2">
+          <div class="muted-box">
+            <div class="kpi" id="kpi-voluntarios">3.274</div>
+            <div class="muted">Voluntários cadastrados</div>
+          </div>
+          <div class="muted-box">
+            <div class="kpi" id="kpi-arvores">48.920</div>
+            <div class="muted">Mudas plantadas</div>
+          </div>
+        </div>
+        <div class="grid-2" style="margin-top:12px">
+          <div class="muted-box">
+            <div class="kpi" id="kpi-mutiroes">186</div>
+            <div class="muted">Mutirões ativos</div>
+          </div>
+          <div class="muted-box">
+            <div class="kpi" id="kpi-fauna">612</div>
+            <div class="muted">Observações de fauna</div>
+          </div>
+        </div>
+        <p class="muted" style="margin-top:12px">*Números ilustrativos</p>
+      </aside>
+    </div>
+  </section>
 
-        <section class="resources">
-            <h2>Recursos para Aprender Mais</h2>
-            <ul>
-                <li><a href="https://www.coursera.org/learn/big-data-introduction" target="_blank">Curso de Big Data - Coursera</a></li>
-                <li><a href="https://www.amazon.com.br/Reinventing-Capitalism-Age-Big-Data/dp/046509368X" target="_blank">Livro: Big Data - Viktor Mayer-Schönberger</a></li>
-                <li><a href="https://www.ibm.com/br-pt/analytics/big-data-analytics" target="_blank">Big Data Analytics - IBM</a></li>
-                <li><a href="https://www.oracle.com/br/big-data/what-is-big-data/" target="_blank">Big Data</a></li>
-                <li><a href="https://aws.amazon.com/pt/what-is/apache-spark/" target="_blank">Apache Spark</a></li>
-                <li><a href="https://cloud.google.com/learn/what-is-hadoop?hl=pt-BR" target="_blank">Hadoop</a></li>
-            </ul>
-        </section>
-        
-    </main>
+  <!-- Situação Atual (estático ilustrativo + placeholder de mapa/dados) -->
+  <section id="situacao">
+    <div class="container">
+      <h2>📊 Situação da Biodiversidade</h2>
+      <p class="muted">Resumo rápido dos impactos do desmatamento e onde sua ajuda faz diferença. </p>
 
-    <footer>
-        <p>© 2025 Big Masters Education. Todos os direitos reservados.</p>
-    </footer>
+      <div class="cards" style="margin-top:14px">
+        <div class="card">
+          <h3>Perda de habitat</h3>
+          <p class="muted">Fragmentação florestal isola populações e reduz corredores ecológicos. Priorize ações de <strong>reflorestamento</strong> e <strong>conexão de fragmentos</strong>.</p>
+        </div>
+        <div class="card">
+          <h3>Polinizadores em risco</h3>
+          <p class="muted">Abelhas e aves-chave sofrem com agroquímicos e perda de flora. Apoie <strong>jardins de nativas</strong> e <strong>monitoramento comunitário</strong>.</p>
+        </div>
+        <div class="card">
+          <h3>Eventos extremos</h3>
+          <p class="muted">Queimadas e secas intensas aumentam com a degradação. Mutirões de <strong>prevenção e restauração</strong> são críticos em bordas de UC.</p>
+        </div>
+      </div>
+
+      <div class="grid-2" style="margin-top:18px">
+        <div class="map" role="img" aria-label="Mapa ilustrativo do Brasil para sobreposição de camadas"></div>
+        <div class="muted-box">
+          <h3 style="margin-top:0">Camadas recomendadas</h3>
+          <ul>
+            <li>Alertas DETER (INPE) • focos de calor (Queimadas)</li>
+            <li>MapBiomas • desmatamento por bioma/município</li>
+            <li>Unidades de Conservação (ICMBio/SEMA) • Terras Indígenas</li>
+            <li>Áreas prioritárias para restauração • corredores ecológicos</li>
+          </ul>
+          <p class="muted"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Como Ajudar (foco na Rede de Voluntários) -->
+  <section id="ajudar">
+    <div class="container">
+      <h2>🤝 Como ajudar agora</h2>
+      <p class="muted">Crie seu perfil, selecione bioma, cidade e interesses. Nós mostramos oportunidades próximas e eventos de mutirão.</p>
+
+      <div class="filters" aria-label="Filtros de oportunidades">
+        <div class="field">
+          <label for="bioma">Bioma</label>
+          <select id="bioma">
+            <option value="">Todos</option>
+            <option>Amazônia</option>
+            <option>Cerrado</option>
+            <option>Mata Atlântica</option>
+            <option>Pantanal</option>
+            <option>Caatinga</option>
+            <option>Pampa</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="uf">Estado (UF)</label>
+          <select id="uf">
+            <option value="">Todos</option>
+            <option>AC</option><option>AM</option><option>PA</option><option>RO</option><option>RR</option>
+            <option>MT</option><option>MS</option><option>GO</option><option>TO</option>
+            <option>SP</option><option>RJ</option><option>MG</option><option>ES</option>
+            <option>BA</option><option>PE</option><option>CE</option><option>RS</option><option>SC</option><option>PR</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="cidade">Cidade</label>
+          <input id="cidade" placeholder="Ex.: Santarém, Curitiba, Salvador" />
+        </div>
+        <div class="field">
+          <label>Interesses</label>
+          <div class="chips" id="chips-interesses">
+            <span class="chip" data-key="reflorestamento">Reflorestamento</span>
+            <span class="chip" data-key="fauna">Monitoramento de fauna</span>
+            <span class="chip" data-key="educacao">Educação ambiental</span>
+            <span class="chip" data-key="limpeza">Limpeza de rios/praias</span>
+            <span class="chip" data-key="vigilancia">Vigilância/Denúncia</span>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:12px; flex-wrap:wrap">
+        <button class="btn" id="btn-limpar">Limpar filtros</button>
+        <button class="btn primary" id="btn-buscar">Buscar oportunidades</button>
+      </div>
+
+      <h3 id="opportunidades" style="margin:26px 0 12px">Oportunidades próximas</h3>
+      <div class="opps" id="lista-opps" aria-live="polite"></div>
+
+      <div class="grid-2" style="margin-top:18px">
+        <div class="muted-box">
+          <h3 style="margin-top:0">Calendário de mutirões (próximos 30 dias)</h3>
+          <table aria-label="Próximos mutirões">
+            <thead><tr><th>Data</th><th>Atividade</th><th>Local</th><th>Vagas</th></tr></thead>
+            <tbody id="tabela-mutiroes"></tbody>
+          </table>
+        </div>
+        <div class="muted-box">
+          <h3 style="margin-top:0">Dicas para iniciantes</h3>
+          <ul>
+            <li>Leve água, chapéu, protetor solar e luvas.</li>
+            <li>Respeite as instruções da equipe técnica.</li>
+            <li>Evite trilhas fora do percurso e minimize ruídos.</li>
+            <li>Priorize espécies nativas da região.</li>
+          </ul>
+          <p class="muted">Você receberá um e‑mail com orientações detalhadas após confirmar presença.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projetos e Parcerias -->
+  <section id="projetos">
+    <div class="container">
+      <h2>🌱 Projetos e Parcerias</h2>
+      <p class="muted">Amplie o impacto conectando sua ONG, escola ou empresa. Oferecemos apoio em mobilização, gestão de voluntários e prestação de contas.</p>
+      <div class="grid-4" style="margin-top:12px">
+        <div class="muted-box"><strong>Corredores Verdes</strong><br><span class="muted">Restauração de APPs e conexão de fragmentos na Mata Atlântica.</span></div>
+        <div class="muted-box"><strong>Guardiões do Cerrado</strong><br><span class="muted">Educação, viveiros comunitários e brigadas preventivas.</span></div>
+        <div class="muted-box"><strong>Pantanal Vivo</strong><br><span class="muted">Monitoramento de fauna e recuperação pós‑queimadas.</span></div>
+        <div class="muted-box"><strong>Rios Limpos</strong><br><span class="muted">Mutirões de limpeza e educação para resíduos.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Educação e Recursos -->
+  <section id="educacao">
+    <div class="container">
+      <h2>📚 Educação & Recursos</h2>
+      <div class="grid-3" style="margin-top:12px">
+        <div class="muted-box"><strong>Minicurso: Voluntariado em Restauração</strong><br><span class="muted">30–40 min • PDF + vídeo • Certificado</span></div>
+        <div class="muted-box"><strong>Guia de Espécies Nativas por Bioma</strong><br><span class="muted">Consulta rápida para plantio e manejo inicial.</span></div>
+        <div class="muted-box"><strong>Cartilha de Denúncias Ambientais</strong><br><span class="muted">Como registrar ocorrências e órgãos competentes.</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contato, Cadastro e Denúncia -->
+  <section id="contato">
+    <div class="container">
+      <h2>✉️ Cadastre-se ou envie uma denúncia</h2>
+      <div class="grid-2">
+        <form id="form-cadastro" class="muted-box" aria-labelledby="titulo-cadastro" novalidate>
+          <h3 id="titulo-cadastro" style="margin-top:0">Quero ser voluntário</h3>
+          <div class="grid-2">
+            <div class="field"><label for="nome">Nome completo</label><input id="nome" required placeholder="Seu nome" /></div>
+            <div class="field"><label for="email">E‑mail</label><input id="email" type="email" required placeholder="voce@email.com" /></div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label for="tel">Telefone (opcional)</label><input id="tel" type="tel" placeholder="(00) 00000‑0000" /></div>
+            <div class="field"><label for="cidade2">Cidade</label><input id="cidade2" required placeholder="Cidade/UF" /></div>
+          </div>
+          <div class="field">
+            <label>Áreas de interesse</label>
+            <div class="chips" id="chips-cadastro">
+              <span class="chip" data-key="reflorestamento">Reflorestamento</span>
+              <span class="chip" data-key="fauna">Fauna</span>
+              <span class="chip" data-key="educacao">Educação</span>
+              <span class="chip" data-key="limpeza">Limpeza</span>
+              <span class="chip" data-key="vigilancia">Vigilância</span>
+            </div>
+          </div>
+          <div class="field"><label for="msg">Mensagem (opcional)</label><textarea id="msg" rows="4" placeholder="Conte um pouco sobre sua disponibilidade…"></textarea></div>
+          <div style="display:flex; gap:10px; align-items:center">
+            <button type="submit" class="btn primary">Cadastrar</button>
+            <span id="cadastro-status" class="muted" role="status" aria-live="polite"></span>
+          </div>
+          <p class="muted" style="margin-top:10px"></p>
+        </form>
+
+        <form id="form-denuncia" class="muted-box" aria-labelledby="titulo-denuncia" novalidate>
+          <h3 id="titulo-denuncia" style="margin-top:0">Denuncie desmatamento/queimadas</h3>
+          <div class="grid-2">
+            <div class="field"><label for="local">Local/Referência</label><input id="local" required placeholder="Ex.: Comunidade X, km Y da BR‑000" /></div>
+            <div class="field"><label for="data">Data</label><input id="data" type="date" required /></div>
+          </div>
+          <div class="grid-2">
+            <div class="field"><label for="bioma3">Bioma</label>
+              <select id="bioma3" required>
+                <option value="">Selecionar</option>
+                <option>Amazônia</option><option>Cerrado</option><option>Mata Atlântica</option><option>Pantanal</option><option>Caatinga</option><option>Pampa</option>
+              </select>
+            </div>
+            <div class="field"><label for="evidencias">Link para evidências (opcional)</label><input id="evidencias" type="url" placeholder="URL de foto/vídeo/drive" /></div>
+          </div>
+          <div class="field"><label for="desc">Descrição</label><textarea id="desc" rows="4" required placeholder="Relate o ocorrido com máximo de detalhes."></textarea></div>
+          <div style="display:flex; gap:10px; align-items:center">
+            <button type="submit" class="btn">Enviar denúncia</button>
+            <span id="denuncia-status" class="muted" role="status" aria-live="polite"></span>
+          </div>
+          <p class="muted" style="margin-top:10px"></code></p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="grid-3">
+        <div>
+          <strong>Rede de Voluntários da Biodiversidade</strong>
+          <p class="muted">Uma iniciativa cidadã para somar esforços de conservação no Brasil.</p>
+        </div>
+        <div>
+          <strong>Contato</strong>
+          <p class="muted">contato@biodiversidade.br<br/>Instagram/Twitter: @biodiversidade</p>
+        </div>
+        <div>
+          <strong>Links úteis</strong>
+          <p class="muted">INPE DETER • MapBiomas • IBAMA • ICMBio</p>
+        </div>
+      </div>
+      <p class="muted" style="margin-top:16px">© <span id="ano"></span> Rede de Voluntários – Conteúdo sob licença CC BY‑SA.</p>
+    </div>
+  </footer>
+
+  <script>
+    // ----- Dados mockados -----
+    const oportunidades = [
+      { id:1, titulo:"Plantio de nativas na APA do Rio Preto", bioma:"Cerrado", uf:"GO", cidade:"Goiânia", vagas:20, data:"2025-11-02", interesses:["reflorestamento"], host:"ONG Guardiões do Cerrado" },
+      { id:2, titulo:"Monitoramento de aves em fragmento urbano", bioma:"Mata Atlântica", uf:"SP", cidade:"São Paulo", vagas:12, data:"2025-10-30", interesses:["fauna","educacao"], host:"Coletivo Parque Vivo" },
+      { id:3, titulo:"Mutirão de limpeza – margem do Rio Cuiabá", bioma:"Pantanal", uf:"MT", cidade:"Cuiabá", vagas:40, data:"2025-11-08", interesses:["limpeza"], host:"Rios Limpos" },
+      { id:4, titulo:"Plantio + cercamento em APP", bioma:"Mata Atlântica", uf:"RJ", cidade:"Niterói", vagas:15, data:"2025-11-16", interesses:["reflorestamento"], host:"Corredores Verdes" },
+      { id:5, titulo:"Oficina de educação ambiental na escola X", bioma:"Caatinga", uf:"BA", cidade:"Juazeiro", vagas:10, data:"2025-11-05", interesses:["educacao"], host:"Instituto Semiárido Vivo" },
+      { id:6, titulo:"Vigilância comunitária de queimadas", bioma:"Amazônia", uf:"PA", cidade:"Santarém", vagas:25, data:"2025-11-03", interesses:["vigilancia"] , host:"Aliança Tapajós"}
+    ];
+
+    const proximosMutiroes = [
+      { data:"2025-10-28", atividade:"Censo rápido de polinizadores", local:"Curitiba/PR", vagas:8 },
+      { data:"2025-10-31", atividade:"Plantio de 500 mudas", local:"Linhares/ES", vagas:35 },
+      { data:"2025-11-02", atividade:"Plantio de nativas (APA Rio Preto)", local:"Goiânia/GO", vagas:20 },
+      { data:"2025-11-03", atividade:"Vigilância comunitária de queimadas", local:"Santarém/PA", vagas:25 }
+    ];
+
+    // ----- App helpers -----
+    const $ = (sel, root=document) => root.querySelector(sel);
+    const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
+
+    const app = {
+      state: {
+        filtros:{ bioma:"", uf:"", cidade:"", interesses: new Set() },
+        cadastro:{ interesses: new Set() }
+      },
+      ui:{
+        renderOpps(){
+          const list = $('#lista-opps');
+          const f = app.state.filtros;
+          const city = f.cidade.trim().toLowerCase();
+          const inters = [...f.interesses];
+          const items = oportunidades.filter(o=>{
+            const byBioma = !f.bioma || o.bioma===f.bioma;
+            const byUF = !f.uf || o.uf===f.uf;
+            const byCidade = !city || o.cidade.toLowerCase().includes(city);
+            const byInteresse = inters.length===0 || inters.every(k=>o.interesses.includes(k));
+            return byBioma && byUF && byCidade && byInteresse;
+          });
+          list.innerHTML = items.map(o=>app.ui.oppCard(o)).join('') || `<div class="muted-box">Nenhuma oportunidade encontrada. Tente ajustar os filtros.</div>`;
+        },
+        oppCard(o){
+          const tags = [`<span class="tag">${o.bioma}</span>`,`<span class="tag">${o.cidade}/${o.uf}</span>`].concat(o.interesses.map(t=>`<span class="tag">${app.ui.prettyTag(t)}</span>`)).join(' ');
+          return `<article class="opp" aria-label="${o.titulo}">
+            <header style="display:flex; justify-content:space-between; align-items:flex-start; gap:10px">
+              <div>
+                <h3 style="margin:0 0 6px">${o.titulo}</h3>
+                <div class="meta">${tags}</div>
+              </div>
+              <div class="muted-box" style="text-align:right"><div><strong>${app.util.date(o.data)}</strong></div><div class="muted">Vagas: ${o.vagas}</div></div>
+            </header>
+            <div style="margin-top:12px; display:flex; gap:10px; flex-wrap:wrap">
+              <button class="btn" onclick="app.actions.interesse(${o.id})">Tenho interesse</button>
+              <button class="btn primary" onclick="app.actions.inscrever(${o.id})">Confirmar presença</button>
+            </div>
+          </article>`;
+        },
+        renderMutiroes(){
+          const tb = $('#tabela-mutiroes');
+          tb.innerHTML = proximosMutiroes.map(m=>`<tr><td>${app.util.date(m.data)}</td><td>${m.atividade}</td><td>${m.local}</td><td>${m.vagas}</td></tr>`).join('');
+        },
+        prettyTag(key){
+          return ({reflorestamento:"Reflorestamento", fauna:"Fauna", educacao:"Educação", limpeza:"Limpeza", vigilancia:"Vigilância"})[key] || key;
+        }
+      },
+      actions:{
+        toggleChip(chipSet, el){
+          el.classList.toggle('active');
+          const key = el.dataset.key;
+          if(!key) return;
+          const set = chipSet;
+          if(el.classList.contains('active')) set.add(key); else set.delete(key);
+        },
+        buscar(){ app.ui.renderOpps(); },
+        limpar(){
+          $('#bioma').value = ''; $('#uf').value = ''; $('#cidade').value='';
+          app.state.filtros = { bioma:"", uf:"", cidade:"", interesses:new Set() };
+          $$('#chips-interesses .chip').forEach(ch=>ch.classList.remove('active'));
+          app.ui.renderOpps();
+        },
+        interesse(id){
+          alert('Legal! Vamos te avisar sobre novas datas desta atividade.');
+        },
+        inscrever(id){
+          const opp = oportunidades.find(o=>o.id===id);
+          alert(`Inscrição prévia para: ${opp.titulo}. (Integre com backend para confirmação e e‑mail)`);
+        },
+        submitSignup(ev){
+          ev.preventDefault();
+          const nome = $('#nome').value.trim();
+          const email = $('#email').value.trim();
+          const cidade = $('#cidade2').value.trim();
+          if(!nome || !email || !cidade){
+            $('#cadastro-status').textContent = 'Preencha nome, e‑mail e cidade.';
+            $('#cadastro-status').style.color = 'var(--warn)';
+            return;
+          }
+          const payload = {
+            nome, email,
+            tel: $('#tel').value.trim(), cidade,
+            interesses: [...app.state.cadastro.interesses],
+            msg: $('#msg').value.trim(),
+            ts: new Date().toISOString()
+          };
+          // Simulação de envio
+          console.log('Enviar cadastro →', payload);
+          localStorage.setItem('cadastro-voluntario', JSON.stringify(payload));
+          $('#cadastro-status').textContent = 'Cadastro enviado! Em breve entraremos em contato.';
+          $('#cadastro-status').style.color = 'var(--ok)';
+          ev.target.reset();
+          app.state.cadastro.interesses.clear();
+          $$('#chips-cadastro .chip').forEach(ch=>ch.classList.remove('active'));
+        },
+        submitReport(ev){
+          ev.preventDefault();
+          const local = $('#local').value.trim();
+          const data = $('#data').value;
+          const bioma = $('#bioma3').value;
+          const desc = $('#desc').value.trim();
+          if(!local || !data || !bioma || !desc){
+            $('#denuncia-status').textContent = 'Preencha todos os campos obrigatórios.';
+            $('#denuncia-status').style.color = 'var(--warn)';
+            return;
+          }
+          const payload = {
+            local, data, bioma,
+            evidencias: $('#evidencias').value.trim(),
+            desc,
+            ts: new Date().toISOString()
+          };
+          console.log('Enviar denúncia →', payload);
+          $('#denuncia-status').textContent = 'Denúncia registrada! Obrigado por agir.';
+          $('#denuncia-status').style.color = 'var(--ok)';
+          ev.target.reset();
+        }
+      },
+      util:{
+        date(iso){
+          const d = new Date(iso);
+          return d.toLocaleDateString('pt-BR', { day:'2-digit', month:'short', year:'numeric' }).replace('.', '');
+        }
+      },
+      integrations:{
+        // Pontos de integração – substitua pelos seus serviços
+        map(){ /* Ex.: MapLibre/Leaflet + GeoJSON */ },
+        submitSignup(payload){ /* POST → seu endpoint */ },
+        submitReport(payload){ /* POST → IBAMA/SEMA/MP ou sua API */ }
+      }
+    };
+
+    // ----- Boot -----
+    document.addEventListener('DOMContentLoaded', () => {
+      $('#ano').textContent = new Date().getFullYear();
+
+      // chips filtros
+      $$('#chips-interesses .chip').forEach(ch => ch.addEventListener('click', () => app.actions.toggleChip(app.state.filtros.interesses, ch)));
+      // chips cadastro
+      $$('#chips-cadastro .chip').forEach(ch => ch.addEventListener('click', () => app.actions.toggleChip(app.state.cadastro.interesses, ch)));
+
+      // filtros básicos
+      $('#bioma').addEventListener('change', e=> app.state.filtros.bioma = e.target.value);
+      $('#uf').addEventListener('change', e=> app.state.filtros.uf = e.target.value);
+      $('#cidade').addEventListener('input', e=> app.state.filtros.cidade = e.target.value);
+      $('#btn-buscar').addEventListener('click', app.actions.buscar);
+      $('#btn-limpar').addEventListener('click', app.actions.limpar);
+
+      // render inicial
+      app.ui.renderOpps();
+      app.ui.renderMutiroes();
+
+      // forms
+      $('#form-cadastro').addEventListener('submit', app.actions.submitSignup);
+      $('#form-denuncia').addEventListener('submit', app.actions.submitReport);
+    });
+  </script>
 </body>
 </html>
