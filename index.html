@@ -1,65 +1,59 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-<head><link rel="icon" href="/cidade-verde.ico" type="image/x-icon">
+<head>
+  <link rel="icon" href="/cidade-verde.ico" type="image/x-icon">
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Rede de Voluntários da Biodiversidade</title>
   <meta name="description" content="Plataforma para conectar pessoas a ações de conservação, reflorestamento e proteção da biodiversidade brasileira." />
+
+  <!-- Leaflet (MAPA) -->
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+    crossorigin=""
+  />
+  <script
+    defer
+    src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+    crossorigin=""
+  ></script>
+
   <style>
     :root{
-      --bg:#0b1b14;           /* fundo profundo selva */
-      --bg-2:#0f241a;         /* variação mais clara */
-      --card:#11291f;         /* cartões */
-      --ink:#e9f5ee;          /* texto principal */
-      --ink-2:#cfe7da;        /* texto secundário */
-      --brand:#50d397;        /* verde ação */
-      --brand-2:#2ab87b;      /* verde escuro */
-      --accent:#72f0c0;       /* detalhes */
-      --warn:#ffd166;         /* destaque quente */
-      --error:#ff6b6b;        /* erro */
-      --ok:#7dd37d;           /* sucesso */
-      --ring: 0 0 0 3px rgb(80 211 151 / 25%);
-      --radius: 16px;
-      --radius-sm: 12px;
+      --bg:#0b1b14; --bg-2:#0f241a; --card:#11291f; --ink:#e9f5ee; --ink-2:#cfe7da;
+      --brand:#50d397; --brand-2:#2ab87b; --accent:#72f0c0; --warn:#ffd166; --error:#ff6b6b; --ok:#7dd37d;
+      --ring: 0 0 0 3px rgb(80 211 151 / 25%); --radius:16px; --radius-sm:12px;
       --shadow: 0 10px 25px rgb(0 0 0 / 35%), inset 0 1px 0 rgb(255 255 255 / 5%);
-      --shadow-sm: 0 6px 16px rgb(0 0 0 / 30%);
-      --shadow-lg: 0 20px 40px rgb(0 0 0 / 45%);
+      --shadow-sm: 0 6px 16px rgb(0 0 0 / 30%); --shadow-lg: 0 20px 40px rgb(0 0 0 / 45%);
     }
     html{scroll-behavior:smooth}
     body{
-      margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+      margin:0; font-family: Inter, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Helvetica Neue", Arial, "Noto Sans";
       background: radial-gradient(1200px 600px at 80% -10%, #154733 0%, transparent 60%),
-                  radial-gradient(900px 600px at -10% 20%, #0e3325 0%, transparent 60%),
-                  var(--bg);
-      color: var(--ink);
-      line-height:1.6;
+                  radial-gradient(900px 600px at -10% 20%, #0e3325 0%, transparent 60%), var(--bg);
+      color: var(--ink); line-height:1.6;
     }
     a{color:white; text-decoration:none}
     a:hover{text-decoration:underline}
     .container{max-width:1100px; margin-inline:auto; padding:0 20px}
-    /* Header */
-    header{
-      position:sticky; top:0; z-index:50; backdrop-filter:saturate(130%) blur(8px);
+
+    header{position:sticky; top:0; z-index:50; backdrop-filter:saturate(130%) blur(8px);
       background: linear-gradient(180deg, rgb(11 27 20 / 90%), rgb(11 27 20 / 60%));
       border-bottom:1px solid rgb(255 255 255 / 6%);
     }
     .nav{display:flex; align-items:center; justify-content:space-between; padding:14px 0}
     .brand{display:flex; align-items:center; gap:12px; font-weight:800; letter-spacing:0.3px}
-    .logo {
-  width: 36px;
-  height: 36px;
-  border-radius: 10px;
-  background:
-    url("/cidade-verde.ico") center/60% no-repeat,
-    conic-gradient(from 280deg, var(--brand), var(--accent));
-  box-shadow: var(--shadow-sm);
-}
+    .logo{width:36px; height:36px; border-radius:10px;
+      background:url("/cidade-verde.ico") center/60% no-repeat,
+                 conic-gradient(from 280deg, var(--brand), var(--accent));
+      box-shadow: var(--shadow-sm);
+    }
     .nav a{padding:10px 12px; border-radius:10px}
     .nav a:hover{background:rgb(255 255 255 / 4%);color: white}
     .cta{background: linear-gradient(180deg, var(--brand), var(--brand-2)); color:#052014; padding:10px 14px; border-radius:12px; font-weight:700; border:1px solid rgb(255 255 255 / 10%); box-shadow: var(--shadow)}
     .cta:hover{filter:brightness(1.05)}
 
-    /* Hero */
     .hero{padding:72px 0 36px; position:relative; overflow:hidden}
     .hero-grid{display:grid; grid-template-columns: 1.15fr 0.85fr; gap:30px}
     .hero h1{font-size: clamp(28px, 3.2vw, 48px); line-height:1.15; margin: 10px 0}
@@ -67,7 +61,6 @@
     .hero-card{background: linear-gradient(180deg, rgb(17 41 31 / 90%), rgb(17 41 31 / 60%)); border:1px solid rgb(255 255 255 / 8%); padding:22px; border-radius:var(--radius); box-shadow:var(--shadow)}
     .pill{display:inline-flex; gap:10px; align-items:center; background: rgb(255 255 255 / 6%); border:1px solid rgb(255 255 255 / 10%); padding:6px 12px; border-radius:999px; font-size:13px}
 
-    /* Section */
     section{padding:56px 0}
     h2{font-size: clamp(22px, 2.6vw, 34px); margin:0 0 12px}
     .muted{color:var(--ink-2)}
@@ -77,16 +70,13 @@
     .card h3{margin:4px 0 8px; font-size:18px}
     .kpi{font-size:28px; font-weight:800}
 
-    /* Filters & form */
     .filters{display:grid; grid-template-columns:repeat(4,1fr); gap:12px; margin:18px 0}
     .field{display:flex; flex-direction:column; gap:8px}
     label{font-size:13px; color:var(--ink-2)}
     select,input,textarea,button{font: inherit}
     select,input,textarea{
-      background: rgb(255 255 255 / 6%);
-      color:var(--ink);
-      border:1px solid rgb(255 255 255 / 10%);
-      padding:10px 12px; border-radius:12px; outline:none;
+      background: rgb(255 255 255 / 6%); color:var(--ink);
+      border:1px solid rgb(255 255 255 / 10%); padding:10px 12px; border-radius:12px; outline:none;
     }
     select:focus,input:focus,textarea:focus{box-shadow: var(--ring); border-color: var(--brand)}
     .chips{display:flex; flex-wrap:wrap; gap:10px}
@@ -96,37 +86,38 @@
     .btn.primary{background:linear-gradient(180deg, var(--brand), var(--brand-2)); color:#052014; font-weight:800}
     .btn:hover{filter:brightness(1.05)}
 
-    /* Opportunities */
     .opps{display:grid; grid-template-columns: repeat(12,1fr); gap:18px}
     .opp{grid-column: span 6; background: var(--card); border:1px solid rgb(255 255 255 / 8%); border-radius: var(--radius); padding:18px; box-shadow:var(--shadow)}
     .opp .meta{display:flex; flex-wrap:wrap; gap:10px; font-size:13px; color:var(--ink-2)}
     .tag{display:inline-flex; gap:6px; align-items:center; padding:6px 10px; border-radius:999px; background:rgb(255 255 255 / 8%); border:1px solid rgb(255 255 255 / 10%)}
 
-    /* Map placeholder */
-    .map{height:320px; border-radius: var(--radius); background:
-      radial-gradient(120px 60px at 20% 30%, #006644 0%, transparent 80%),
-      radial-gradient(220px 80px at 70% 60%, #155a44 0%, transparent 80%),
-      linear-gradient(180deg, #0a1d16, #0d241b);
-      border:1px solid rgb(255 255 255 / 8%); box-shadow:var(--shadow); position:relative; overflow:hidden}
-    .map::after{content:"Mapa interativo em breve (INPE / MapBiomas / OSM)…"; position:absolute; inset:auto 12px 12px 12px; color:var(--ink-2); font-size:14px}
+    /* MAPA: agora é um container real do Leaflet */
+    .map{
+      height:320px;
+      border-radius: var(--radius);
+      border:1px solid rgb(255 255 255 / 8%);
+      box-shadow:var(--shadow);
+      position:relative; overflow:hidden;
+    }
+    /* ajusta UI do Leaflet ao tema */
+    .leaflet-control{border-radius:10px !important; overflow:hidden}
+    .leaflet-control a{background:rgb(255 255 255 / 85%)}
+    .leaflet-bar a{color:#052014}
+    .leaflet-popup-content-wrapper{border-radius:12px}
 
-    /* Tables */
     table{width:100%; border-collapse:separate; border-spacing:0; overflow:hidden; border-radius: var(--radius-sm); box-shadow:var(--shadow); border:1px solid rgb(255 255 255 / 8%)}
     th, td{padding:12px 14px; text-align:left}
     thead th{background: rgb(255 255 255 / 8%); font-weight:700}
     tbody tr:nth-child(odd){background: rgb(255 255 255 / 4%)}
 
-    /* Footer */
     footer{padding:40px 0; color:var(--ink-2); border-top:1px solid rgb(255 255 255 / 8%)}
 
-    /* Utilities */
     .grid-2{display:grid; grid-template-columns: 1fr 1fr; gap:18px}
     .grid-3{display:grid; grid-template-columns: repeat(3, 1fr); gap:18px}
     .grid-4{display:grid; grid-template-columns: repeat(4, 1fr); gap:18px}
     .muted-box{background: rgb(255 255 255 / 6%); border:1px solid rgb(255 255 255 / 8%); padding:14px; border-radius:12px}
     .sr-only{position:absolute !important; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0}
 
-    /* Responsive */
     @media (max-width: 980px){
       .hero-grid{grid-template-columns: 1fr}
       .cards .card{grid-column: span 6}
@@ -166,9 +157,7 @@
       <div>
         <span class="pill">🟢 Plataforma cidadã &nbsp;•&nbsp; Amazônia • Cerrado • Mata Atlântica • Pantanal</span>
         <h1>Junte-se à Rede de Voluntários e <span style="color:var(--brand)">proteja a biodiversidade brasileira</span>.</h1>
-        <p>
-          Conectamos pessoas a mutirões, ações de reflorestamento, monitoramento de fauna, educação ambiental e denúncias de desmatamento. Cadastre-se, escolha seu bioma e encontre oportunidades perto de você.
-        </p>
+        <p>Conectamos pessoas a mutirões, ações de reflorestamento, monitoramento de fauna, educação ambiental e denúncias de desmatamento. Cadastre-se, escolha seu bioma e encontre oportunidades perto de você.</p>
         <div style="display:flex; gap:12px; flex-wrap:wrap">
           <a class="btn primary" href="#contato">Quero participar</a>
           <a class="btn" href="#opportunidades">Ver oportunidades</a>
@@ -176,53 +165,34 @@
       </div>
       <aside class="hero-card" aria-label="Indicadores rápidos">
         <div class="grid-2">
-          <div class="muted-box">
-            <div class="kpi" id="kpi-voluntarios">3.274</div>
-            <div class="muted">Voluntários cadastrados</div>
-          </div>
-          <div class="muted-box">
-            <div class="kpi" id="kpi-arvores">48.920</div>
-            <div class="muted">Mudas plantadas</div>
-          </div>
+          <div class="muted-box"><div class="kpi" id="kpi-voluntarios">3.274</div><div class="muted">Voluntários cadastrados</div></div>
+          <div class="muted-box"><div class="kpi" id="kpi-arvores">48.920</div><div class="muted">Mudas plantadas</div></div>
         </div>
         <div class="grid-2" style="margin-top:12px">
-          <div class="muted-box">
-            <div class="kpi" id="kpi-mutiroes">186</div>
-            <div class="muted">Mutirões ativos</div>
-          </div>
-          <div class="muted-box">
-            <div class="kpi" id="kpi-fauna">612</div>
-            <div class="muted">Observações de fauna</div>
-          </div>
+          <div class="muted-box"><div class="kpi" id="kpi-mutiroes">186</div><div class="muted">Mutirões ativos</div></div>
+          <div class="muted-box"><div class="kpi" id="kpi-fauna">612</div><div class="muted">Observações de fauna</div></div>
         </div>
         <p class="muted" style="margin-top:12px">*Números ilustrativos</p>
       </aside>
     </div>
   </section>
 
-  <!-- Situação Atual (estático ilustrativo + placeholder de mapa/dados) -->
+  <!-- Situação + MAPA -->
   <section id="situacao">
     <div class="container">
       <h2>📊 Situação da Biodiversidade</h2>
       <p class="muted">Resumo rápido dos impactos do desmatamento e onde sua ajuda faz diferença. </p>
 
       <div class="cards" style="margin-top:14px">
-        <div class="card">
-          <h3>Perda de habitat</h3>
-          <p class="muted">Fragmentação florestal isola populações e reduz corredores ecológicos. Priorize ações de <strong>reflorestamento</strong> e <strong>conexão de fragmentos</strong>.</p>
-        </div>
-        <div class="card">
-          <h3>Polinizadores em risco</h3>
-          <p class="muted">Abelhas e aves-chave sofrem com agroquímicos e perda de flora. Apoie <strong>jardins de nativas</strong> e <strong>monitoramento comunitário</strong>.</p>
-        </div>
-        <div class="card">
-          <h3>Eventos extremos</h3>
-          <p class="muted">Queimadas e secas intensas aumentam com a degradação. Mutirões de <strong>prevenção e restauração</strong> são críticos em bordas de UC.</p>
-        </div>
+        <div class="card"><h3>Perda de habitat</h3><p class="muted">Fragmentação florestal isola populações e reduz corredores ecológicos. Priorize ações de <strong>reflorestamento</strong> e <strong>conexão de fragmentos</strong>.</p></div>
+        <div class="card"><h3>Polinizadores em risco</h3><p class="muted">Abelhas e aves-chave sofrem com agroquímicos e perda de flora. Apoie <strong>jardins de nativas</strong> e <strong>monitoramento comunitário</strong>.</p></div>
+        <div class="card"><h3>Eventos extremos</h3><p class="muted">Queimadas e secas intensas aumentam com a degradação. Mutirões de <strong>prevenção e restauração</strong> são críticos em bordas de UC.</p></div>
       </div>
 
       <div class="grid-2" style="margin-top:18px">
-        <div class="map" role="img" aria-label="Mapa ilustrativo do Brasil para sobreposição de camadas"></div>
+        <!-- AGORA É UM MAPA DE VERDADE -->
+        <div id="map" class="map" role="region" aria-label="Mapa interativo do Brasil"></div>
+
         <div class="muted-box">
           <h3 style="margin-top:0">Camadas recomendadas</h3>
           <ul>
@@ -231,13 +201,13 @@
             <li>Unidades de Conservação (ICMBio/SEMA) • Terras Indígenas</li>
             <li>Áreas prioritárias para restauração • corredores ecológicos</li>
           </ul>
-          <p class="muted"></p>
+          <p class="muted">Este mapa usa dados de demonstração.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Como Ajudar (foco na Rede de Voluntários) -->
+  <!-- Como Ajudar -->
   <section id="ajudar">
     <div class="container">
       <h2>🤝 Como ajudar agora</h2>
@@ -248,12 +218,8 @@
           <label for="bioma">Bioma</label>
           <select id="bioma">
             <option value="">Todos</option>
-            <option>Amazônia</option>
-            <option>Cerrado</option>
-            <option>Mata Atlântica</option>
-            <option>Pantanal</option>
-            <option>Caatinga</option>
-            <option>Pampa</option>
+            <option>Amazônia</option><option>Cerrado</option><option>Mata Atlântica</option>
+            <option>Pantanal</option><option>Caatinga</option><option>Pampa</option>
           </select>
         </div>
         <div class="field">
@@ -266,10 +232,7 @@
             <option>BA</option><option>PE</option><option>CE</option><option>RS</option><option>SC</option><option>PR</option>
           </select>
         </div>
-        <div class="field">
-          <label for="cidade">Cidade</label>
-          <input id="cidade" placeholder="Ex.: Santarém, Curitiba, Salvador" />
-        </div>
+        <div class="field"><label for="cidade">Cidade</label><input id="cidade" placeholder="Ex.: Santarém, Curitiba, Salvador" /></div>
         <div class="field">
           <label>Interesses</label>
           <div class="chips" id="chips-interesses">
@@ -306,13 +269,13 @@
             <li>Evite trilhas fora do percurso e minimize ruídos.</li>
             <li>Priorize espécies nativas da região.</li>
           </ul>
-          <p class="muted">Você receberá um e‑mail com orientações detalhadas após confirmar presença.</p>
+          <p class="muted">Você receberá um e-mail com orientações detalhadas após confirmar presença.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Projetos e Parcerias -->
+  <!-- Projetos -->
   <section id="projetos">
     <div class="container">
       <h2>🌱 Projetos e Parcerias</h2>
@@ -320,13 +283,13 @@
       <div class="grid-4" style="margin-top:12px">
         <div class="muted-box"><strong>Corredores Verdes</strong><br><span class="muted">Restauração de APPs e conexão de fragmentos na Mata Atlântica.</span></div>
         <div class="muted-box"><strong>Guardiões do Cerrado</strong><br><span class="muted">Educação, viveiros comunitários e brigadas preventivas.</span></div>
-        <div class="muted-box"><strong>Pantanal Vivo</strong><br><span class="muted">Monitoramento de fauna e recuperação pós‑queimadas.</span></div>
+        <div class="muted-box"><strong>Pantanal Vivo</strong><br><span class="muted">Monitoramento de fauna e recuperação pós-queimadas.</span></div>
         <div class="muted-box"><strong>Rios Limpos</strong><br><span class="muted">Mutirões de limpeza e educação para resíduos.</span></div>
       </div>
     </div>
   </section>
 
-  <!-- Educação e Recursos -->
+  <!-- Educação -->
   <section id="educacao">
     <div class="container">
       <h2>📚 Educação & Recursos</h2>
@@ -338,7 +301,7 @@
     </div>
   </section>
 
-  <!-- Contato, Cadastro e Denúncia -->
+  <!-- Contato -->
   <section id="contato">
     <div class="container">
       <h2>✉️ Cadastre-se ou envie uma denúncia</h2>
@@ -347,10 +310,10 @@
           <h3 id="titulo-cadastro" style="margin-top:0">Quero ser voluntário</h3>
           <div class="grid-2">
             <div class="field"><label for="nome">Nome completo</label><input id="nome" required placeholder="Seu nome" /></div>
-            <div class="field"><label for="email">E‑mail</label><input id="email" type="email" required placeholder="voce@email.com" /></div>
+            <div class="field"><label for="email">E-mail</label><input id="email" type="email" required placeholder="voce@email.com" /></div>
           </div>
           <div class="grid-2">
-            <div class="field"><label for="tel">Telefone (opcional)</label><input id="tel" type="tel" placeholder="(00) 00000‑0000" /></div>
+            <div class="field"><label for="tel">Telefone (opcional)</label><input id="tel" type="tel" placeholder="(00) 00000-0000" /></div>
             <div class="field"><label for="cidade2">Cidade</label><input id="cidade2" required placeholder="Cidade/UF" /></div>
           </div>
           <div class="field">
@@ -374,7 +337,7 @@
         <form id="form-denuncia" class="muted-box" aria-labelledby="titulo-denuncia" novalidate>
           <h3 id="titulo-denuncia" style="margin-top:0">Denuncie desmatamento/queimadas</h3>
           <div class="grid-2">
-            <div class="field"><label for="local">Local/Referência</label><input id="local" required placeholder="Ex.: Comunidade X, km Y da BR‑000" /></div>
+            <div class="field"><label for="local">Local/Referência</label><input id="local" required placeholder="Ex.: Comunidade X, km Y da BR-000" /></div>
             <div class="field"><label for="data">Data</label><input id="data" type="date" required /></div>
           </div>
           <div class="grid-2">
@@ -400,20 +363,11 @@
   <footer>
     <div class="container">
       <div class="grid-3">
-        <div>
-          <strong>Rede de Voluntários da Biodiversidade</strong>
-          <p class="muted">Uma iniciativa cidadã para somar esforços de conservação no Brasil.</p>
-        </div>
-        <div>
-          <strong>Contato</strong>
-          <p class="muted">contato@biodiversidade.br<br/>Instagram/Twitter: @biodiversidade</p>
-        </div>
-        <div>
-          <strong>Links úteis</strong>
-          <p class="muted">INPE DETER • MapBiomas • IBAMA • ICMBio</p>
-        </div>
+        <div><strong>Rede de Voluntários da Biodiversidade</strong><p class="muted">Uma iniciativa cidadã para somar esforços de conservação no Brasil.</p></div>
+        <div><strong>Contato</strong><p class="muted">contato@biodiversidade.br<br/>Instagram/Twitter: @biodiversidade</p></div>
+        <div><strong>Links úteis</strong><p class="muted">INPE DETER • MapBiomas • IBAMA • ICMBio</p></div>
       </div>
-      <p class="muted" style="margin-top:16px">© <span id="ano"></span> Rede de Voluntários – Conteúdo sob licença CC BY‑SA.</p>
+      <p class="muted" style="margin-top:16px">© <span id="ano"></span> Rede de Voluntários – Conteúdo sob licença CC BY-SA.</p>
     </div>
   </footer>
 
@@ -427,7 +381,6 @@
       { id:5, titulo:"Oficina de educação ambiental na escola X", bioma:"Caatinga", uf:"BA", cidade:"Juazeiro", vagas:10, data:"2025-11-05", interesses:["educacao"], host:"Instituto Semiárido Vivo" },
       { id:6, titulo:"Vigilância comunitária de queimadas", bioma:"Amazônia", uf:"PA", cidade:"Santarém", vagas:25, data:"2025-11-03", interesses:["vigilancia"] , host:"Aliança Tapajós"}
     ];
-
     const proximosMutiroes = [
       { data:"2025-10-28", atividade:"Censo rápido de polinizadores", local:"Curitiba/PR", vagas:8 },
       { data:"2025-10-31", atividade:"Plantio de 500 mudas", local:"Linhares/ES", vagas:35 },
@@ -435,7 +388,7 @@
       { data:"2025-11-03", atividade:"Vigilância comunitária de queimadas", local:"Santarém/PA", vagas:25 }
     ];
 
-    // ----- App helpers -----
+    // ----- Helpers -----
     const $ = (sel, root=document) => root.querySelector(sel);
     const $$ = (sel, root=document) => [...root.querySelectorAll(sel)];
 
@@ -498,12 +451,10 @@
           $$('#chips-interesses .chip').forEach(ch=>ch.classList.remove('active'));
           app.ui.renderOpps();
         },
-        interesse(id){
-          alert('Legal! Vamos te avisar sobre novas datas desta atividade.');
-        },
+        interesse(){ alert('Legal! Vamos te avisar sobre novas datas desta atividade.'); },
         inscrever(id){
           const opp = oportunidades.find(o=>o.id===id);
-          alert(`Inscrição prévia para: ${opp.titulo}. (Integre com backend para confirmação e e‑mail)`);
+          alert(`Inscrição prévia para: ${opp.titulo}. (Integre com backend para confirmação e e-mail)`);
         },
         submitSignup(ev){
           ev.preventDefault();
@@ -511,7 +462,7 @@
           const email = $('#email').value.trim();
           const cidade = $('#cidade2').value.trim();
           if(!nome || !email || !cidade){
-            $('#cadastro-status').textContent = 'Preencha nome, e‑mail e cidade.';
+            $('#cadastro-status').textContent = 'Preencha nome, e-mail e cidade.';
             $('#cadastro-status').style.color = 'var(--warn)';
             return;
           }
@@ -522,7 +473,6 @@
             msg: $('#msg').value.trim(),
             ts: new Date().toISOString()
           };
-          // Simulação de envio
           console.log('Enviar cadastro →', payload);
           localStorage.setItem('cadastro-voluntario', JSON.stringify(payload));
           $('#cadastro-status').textContent = 'Cadastro enviado! Em breve entraremos em contato.';
@@ -561,10 +511,83 @@
         }
       },
       integrations:{
-        // Pontos de integração – substitua pelos seus serviços
-        map(){ /* Ex.: MapLibre/Leaflet + GeoJSON */ },
+        // ====== MAPA (Leaflet) ======
+        map(){
+          // Base escura (Carto) — troque por outra se preferir
+          const baseDark = L.tileLayer(
+            'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+            { attribution: '&copy; OpenStreetMap & CARTO', subdomains: 'abcd', maxZoom: 19 }
+          );
+          const baseOSM = L.tileLayer(
+            'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+            { attribution: '&copy; OpenStreetMap', maxZoom: 19 }
+          );
+
+          const map = L.map('map', {
+            center: [-14.235004, -51.92528], // Brasil
+            zoom: 4,
+            zoomControl: false,
+            layers: [baseDark]
+          });
+          L.control.zoom({ position: 'topright' }).addTo(map);
+          L.control.scale({ metric:true, imperial:false }).addTo(map);
+
+          // --- DEMO GeoJSONs (substitua por dados reais) ---
+          // Focos de calor (pontos)
+          const focos = L.geoJSON({
+            "type":"FeatureCollection",
+            "features":[
+              {"type":"Feature","properties":{"fonte":"Queimadas (demo)","data":"2025-10-20"},"geometry":{"type":"Point","coordinates":[-60.0,-3.1]}},
+              {"type":"Feature","properties":{"fonte":"Queimadas (demo)","data":"2025-10-21"},"geometry":{"type":"Point","coordinates":[-54.7,-10.2]}},
+              {"type":"Feature","properties":{"fonte":"Queimadas (demo)","data":"2025-10-21"},"geometry":{"type":"Point","coordinates":[-48.1,-15.9]}}
+            ]
+          }, {
+            pointToLayer: (f, latlng) => L.circleMarker(latlng, {
+              radius: 6, color:'#ffdd55', weight:1, fillColor:'#ff9900', fillOpacity:0.85
+            }),
+            onEachFeature: (f, layer) => layer.bindPopup(`<strong>Foco de calor</strong><br>Fonte: ${f.properties.fonte}<br>Data: ${f.properties.data}`)
+          });
+
+          // UC/TI (polígonos simplificados)
+          const areasProtegidas = L.geoJSON({
+            "type":"FeatureCollection",
+            "features":[
+              {"type":"Feature","properties":{"tipo":"UC Federal (demo)","nome":"Parque Nacional Exemplo"},"geometry":{"type":"Polygon","coordinates":[[[-60,-5],[-58,-5],[-58,-3],[-60,-3],[-60,-5]]]}},
+              {"type":"Feature","properties":{"tipo":"Terra Indígena (demo)","nome":"TI Exemplo"},"geometry":{"type":"Polygon","coordinates":[[[-50,-14],[-47,-14],[-47,-12],[-50,-12],[-50,-14]]]}}
+            ]
+          }, {
+            style: f => ({ color: f.properties.tipo.includes('Indígena') ? '#72f0c0' : '#50d397', weight: 2, fillOpacity: 0.15 }),
+            onEachFeature: (f, layer) => layer.bindPopup(`<strong>${f.properties.tipo}</strong><br>${f.properties.nome}`)
+          });
+
+          // Áreas prioritárias p/ restauração (retângulos como exemplo)
+          const restauracao = L.layerGroup([
+            L.rectangle([[-22,-47],[-23.5,-45]], {color:'#2ab87b', weight:1, fillOpacity:0.2}),
+            L.rectangle([[-9,-36],[-10.5,-34]], {color:'#2ab87b', weight:1, fillOpacity:0.2})
+          ]).bindPopup('<strong>Área prioritária (demo)</strong>');
+
+          // Controle de camadas
+          const bases = { "Carto Dark": baseDark, "OSM Claro": baseOSM };
+          const overlays = {
+            "🔥 Focos de calor (demo)": focos,
+            "🟢 UC / Terras Indígenas (demo)": areasProtegidas,
+            "🌱 Áreas prioritárias (demo)": restauracao
+          };
+          L.control.layers(bases, overlays, { position:'topleft', collapsed:true }).addTo(map);
+
+          // adiciona overlays por padrão
+          focos.addTo(map);
+          areasProtegidas.addTo(map);
+
+          // Enquadra Brasil
+          map.fitBounds([[-34,-74], [5,-34]]);
+
+          // Guarda referência para uso externo (p.ex. pan para UF)
+          app._map = map;
+        },
+        // endpoints (placeholder)
         submitSignup(payload){ /* POST → seu endpoint */ },
-        submitReport(payload){ /* POST → IBAMA/SEMA/MP ou sua API */ }
+        submitReport(payload){ /* POST → sua API ou órgãos */ }
       }
     };
 
@@ -572,25 +595,43 @@
     document.addEventListener('DOMContentLoaded', () => {
       $('#ano').textContent = new Date().getFullYear();
 
-      // chips filtros
+      // chips
       $$('#chips-interesses .chip').forEach(ch => ch.addEventListener('click', () => app.actions.toggleChip(app.state.filtros.interesses, ch)));
-      // chips cadastro
       $$('#chips-cadastro .chip').forEach(ch => ch.addEventListener('click', () => app.actions.toggleChip(app.state.cadastro.interesses, ch)));
 
-      // filtros básicos
+      // filtros
       $('#bioma').addEventListener('change', e=> app.state.filtros.bioma = e.target.value);
-      $('#uf').addEventListener('change', e=> app.state.filtros.uf = e.target.value);
+      $('#uf').addEventListener('change', e=>{
+        app.state.filtros.uf = e.target.value;
+        // pan para a UF (centros aproximados; adicione mais se quiser)
+        const centers = {
+          "AM":[-3.07,-61.66],"PA":[-3.79,-52.48],"RO":[-10.83,-63.34],"RR":[2.05,-61.39],
+          "MT":[-13.02,-55.92],"MS":[-20.51,-54.54],"GO":[-15.83,-49.37],"TO":[-10.18,-48.33],
+          "SP":[-22.19,-48.79],"RJ":[-22.41,-43.7],"MG":[-18.84,-44.38],"ES":[-19.39,-40.07],
+          "BA":[-12.96,-41.39],"PE":[-8.39,-37.86],"CE":[-5.54,-39.72],
+          "RS":[-29.69,-53.81],"SC":[-27.33,-50.44],"PR":[-24.89,-51.56],
+          "AC":[-9.02,-70.81]
+        };
+        if(app._map && centers[e.target.value]){
+          app._map.setView(centers[e.target.value], 6);
+        } else if(app._map && !e.target.value){
+          app._map.fitBounds([[-34,-74],[5,-34]]);
+        }
+      });
       $('#cidade').addEventListener('input', e=> app.state.filtros.cidade = e.target.value);
       $('#btn-buscar').addEventListener('click', app.actions.buscar);
       $('#btn-limpar').addEventListener('click', app.actions.limpar);
 
-      // render inicial
+      // inicializa listas
       app.ui.renderOpps();
       app.ui.renderMutiroes();
 
       // forms
       $('#form-cadastro').addEventListener('submit', app.actions.submitSignup);
       $('#form-denuncia').addEventListener('submit', app.actions.submitReport);
+
+      // inicia o MAPA
+      app.integrations.map();
     });
   </script>
 </body>
